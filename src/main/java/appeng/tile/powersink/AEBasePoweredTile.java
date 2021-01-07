@@ -59,10 +59,6 @@ public abstract class AEBasePoweredTile extends AEBaseInvTile implements IAEPowe
 	public AEBasePoweredTile()
 	{
 		this.forgeEnergyAdapter = new ForgeEnergyAdapter( this );
-		if( Capabilities.TESLA_CONSUMER != null )
-		{
-			this.teslaEnergyAdapter = new TeslaEnergyAdapter( this );
-		}
 		this.ic2Sink = Integrations.ic2().createPowerSink( this, this );
 		this.ic2Sink.setValidFaces( this.internalPowerSides );
 	}
@@ -277,13 +273,6 @@ public abstract class AEBasePoweredTile extends AEBaseInvTile implements IAEPowe
 				return true;
 			}
 		}
-		else if( capability == Capabilities.TESLA_CONSUMER )
-		{
-			if( this.getPowerSides().contains( facing ) )
-			{
-				return true;
-			}
-		}
 
 		return super.hasCapability( capability, facing );
 	}
@@ -297,13 +286,6 @@ public abstract class AEBasePoweredTile extends AEBaseInvTile implements IAEPowe
 			if( this.getPowerSides().contains( facing ) )
 			{
 				return (T) this.forgeEnergyAdapter;
-			}
-		}
-		else if( capability == Capabilities.TESLA_CONSUMER )
-		{
-			if( this.getPowerSides().contains( facing ) )
-			{
-				return (T) this.teslaEnergyAdapter;
 			}
 		}
 

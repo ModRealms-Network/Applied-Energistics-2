@@ -30,11 +30,6 @@ repositories {
     }
 
     maven {
-        name = "Tesla repo"
-        url "http://maven.mcmoddev.com"
-    }
-
-    maven {
         name = "IC2 repo"
         url = "http://maven.ic2.player.to"
     }
@@ -56,7 +51,7 @@ repositories {
 
     maven { // Hwyla
         name 'tehnut'
-        url "http://tehnut.info/maven"
+        url "https://maven.tehnut.info"
     }
 
    	maven { // CraftTweaker
@@ -88,7 +83,6 @@ dependencies {
     // compile against provided APIs
     compileOnly "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
     compileOnly "mcp.mobius.waila:Hwyla:${hwyla_version}"
-    compileOnly "net.darkhax.tesla:Tesla-1.12.2:${tesla_version}"
     compileOnly "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
     compileOnly "mcjty.theoneprobe:TheOneProbe-1.12:${top_version}:api"
     compileOnly "cofh:CoFHCore:${cofhcore_version}:deobf"

@@ -21,8 +21,6 @@ package appeng.items.tools.powered.powersink;
 
 import javax.annotation.Nullable;
 
-import net.darkhax.tesla.api.ITeslaConsumer;
-import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -51,20 +49,13 @@ class PoweredItemCapabilities implements ICapabilityProvider, IEnergyStorage
 	{
 		this.is = is;
 		this.item = item;
-		if( Capabilities.TESLA_CONSUMER != null || Capabilities.TESLA_HOLDER != null )
-		{
-			this.teslaAdapter = new TeslaAdapter();
-		}
-		else
-		{
-			this.teslaAdapter = null;
-		}
+		this.teslaAdapter = null;
 	}
 
 	@Override
 	public boolean hasCapability( Capability<?> capability, @Nullable EnumFacing facing )
 	{
-		return capability == Capabilities.FORGE_ENERGY || capability == Capabilities.TESLA_CONSUMER || capability == Capabilities.TESLA_HOLDER;
+		return capability == Capabilities.FORGE_ENERGY;
 	}
 
 	@SuppressWarnings( "unchecked" )
@@ -74,10 +65,6 @@ class PoweredItemCapabilities implements ICapabilityProvider, IEnergyStorage
 		if( capability == Capabilities.FORGE_ENERGY )
 		{
 			return (T) this;
-		}
-		else if( capability == Capabilities.TESLA_CONSUMER || capability == Capabilities.TESLA_HOLDER )
-		{
-			return (T) this.teslaAdapter;
 		}
 		return null;
 	}
@@ -119,27 +106,5 @@ class PoweredItemCapabilities implements ICapabilityProvider, IEnergyStorage
 	public boolean canReceive()
 	{
 		return true;
-	}
-
-	private class TeslaAdapter implements ITeslaConsumer, ITeslaHolder
-	{
-
-		@Override
-		public long givePower( long power, boolean simulated )
-		{
-			return PoweredItemCapabilities.this.receiveEnergy( (int) power, simulated );
-		}
-
-		@Override
-		public long getStoredPower()
-		{
-			return PoweredItemCapabilities.this.getEnergyStored();
-		}
-
-		@Override
-		public long getCapacity()
-		{
-			return PoweredItemCapabilities.this.getMaxEnergyStored();
-		}
 	}
 }

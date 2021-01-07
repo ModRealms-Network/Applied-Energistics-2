@@ -123,7 +123,11 @@ public class PartPlacement
 
 						if( host.isEmpty() )
 						{
-							host.cleanup();
+							if(block.removedByPlayer(world.getBlockState( pos ), world, pos, player, false )){
+								host.cleanup();
+							} else {
+								return EnumActionResult.FAIL;
+							}
 						}
 
 						if( !is.isEmpty() )
