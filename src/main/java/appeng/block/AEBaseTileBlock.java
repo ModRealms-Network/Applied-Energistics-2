@@ -43,9 +43,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import appeng.api.implementations.items.IMemoryCard;
@@ -318,7 +320,7 @@ public abstract class AEBaseTileBlock extends AEBaseBlock implements ITileEntity
 					}
 				}
 
-				if( block.removedByPlayer( blockState, world, pos, player, false ) )
+				if(MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(world, pos, world.getBlockState(pos), player)))
 				{
 					final List<ItemStack> itemsToDrop = Lists.newArrayList( itemDropCandidates );
 					Platform.spawnDrops( world, pos, itemsToDrop );

@@ -86,10 +86,6 @@ public class PartPlacement
 				return EnumActionResult.FAIL;
 			}
 
-			if(!MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(world, pos, world.getBlockState(pos), player))){
-				return EnumActionResult.FAIL;
-			}
-
 			final Block block = world.getBlockState( pos ).getBlock();
 			final TileEntity tile = world.getTileEntity( pos );
 			IPartHost host = null;
@@ -114,16 +110,20 @@ public class PartPlacement
 
 						if( sp.part != null )
 						{
-							is.add( sp.part.getItemStack( PartItemStack.WRENCH ) );
-							sp.part.getDrops( is, true );
-							host.removePart( sp.side, false );
+							if(MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(world, pos, world.getBlockState(pos), player))){
+								is.add( sp.part.getItemStack( PartItemStack.WRENCH ) );
+								sp.part.getDrops( is, true );
+								host.removePart( sp.side, false );
+							}
 						}
 
 						if( sp.facade != null )
 						{
-							is.add( sp.facade.getItemStack() );
-							host.getFacadeContainer().removeFacade( host, sp.side );
-							Platform.notifyBlocksOfNeighbors( world, pos );
+							if(MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(world, pos, world.getBlockState(pos), player))){
+								is.add( sp.facade.getItemStack() );
+								host.getFacadeContainer().removeFacade( host, sp.side );
+								Platform.notifyBlocksOfNeighbors( world, pos );
+							}
 						}
 
 						if( host.isEmpty() )
