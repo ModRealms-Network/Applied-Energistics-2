@@ -343,6 +343,7 @@ public class TileCableBus extends AEBaseTile implements AEMultiTile, ICustomColl
 	@Override
 	public void cleanup()
 	{
+
 		this.getWorld().setBlockToAir( this.pos );
 	}
 

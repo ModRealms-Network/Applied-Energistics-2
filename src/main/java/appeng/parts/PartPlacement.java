@@ -109,6 +109,7 @@ public class PartPlacement
 
 						if( sp.part != null )
 						{
+							block.onBlockHarvested(world, pos, world.getBlockState(pos), player);
 							is.add( sp.part.getItemStack( PartItemStack.WRENCH ) );
 							sp.part.getDrops( is, true );
 							host.removePart( sp.side, false );
@@ -116,6 +117,7 @@ public class PartPlacement
 
 						if( sp.facade != null )
 						{
+							block.onBlockHarvested(world, pos, world.getBlockState(pos), player);
 							is.add( sp.facade.getItemStack() );
 							host.getFacadeContainer().removeFacade( host, sp.side );
 							Platform.notifyBlocksOfNeighbors( world, pos );
@@ -123,11 +125,8 @@ public class PartPlacement
 
 						if( host.isEmpty() )
 						{
-							if(block.removedByPlayer(world.getBlockState( pos ), world, pos, player, false )){
-								host.cleanup();
-							} else {
-								return EnumActionResult.FAIL;
-							}
+							block.onBlockHarvested(world, pos, world.getBlockState(pos), player);
+							host.cleanup();
 						}
 
 						if( !is.isEmpty() )
